@@ -13,8 +13,10 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+   
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "next/*": ["node_modules/next/types"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
