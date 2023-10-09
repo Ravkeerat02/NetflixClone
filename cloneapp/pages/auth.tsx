@@ -1,19 +1,31 @@
 
 import Input from "components/input";
 import { useCallback, useState } from "react";
+import axios from "axios";
 
 const Auth = () => {
 
   // set and effect setup 
   const[email , setEmail] = useState('');
-  const[userName , setuserName] = useState('');
-  const[psswd , setPsswd] = useState('');
+  const[name , setName] = useState('');
+  const[password , setPassword] = useState('');
 
   //toggle creation 
   const [variant , setVariant] = useState('login');
   const toggleVariant = useCallback(() => {
     setVariant((prev) => (prev === 'login' ? 'register' : 'login'));
   },[]);
+
+  // register - used in on click
+  const register = useCallback(async() => {
+    try{
+      await axios.post('/api/register' , {
+        email , name , password
+      })
+    }catch(error){
+      console.log(error);
+    }
+  },[email , name , password])
 
 
   return (
@@ -32,9 +44,9 @@ const Auth = () => {
               {variant == 'register' && (
                 <Input
                   label="Username"
-                  onChange={(ev:any) => setuserName(ev.target.value)}
+                  onChange={(ev:any) => setName(ev.target.value)}
                   id="name"
-                  value={userName}
+                  value={name}
                 />
               )}
               <Input
@@ -46,13 +58,13 @@ const Auth = () => {
               />
               <Input
                 label="Password"
-                onChange={(ev:any) => setPsswd(ev.target.value)}
+                onChange={(ev:any) => setPassword(ev.target.value)}
                 id="password"
                 type="password"
-                value={psswd}
+                value={password}
               />
             </div>
-            <button className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 trasition ">{variant === 'login' ? 'Login' :'Sign up'}</button>
+            <button onClick={register}  className="bg-red-600 py-3 text-white rounded-md w-full mt-10 hover:bg-red-700 trasition ">{variant === 'login' ? 'Login' :'Sign up'}</button>
             <p className="text-neutral-500 mt-12">
               {variant === 'login' ? 'First time using Netflix ?' : 'Already have an account'} 
               <span  onClick={toggleVariant} 
