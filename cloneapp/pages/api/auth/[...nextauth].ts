@@ -59,9 +59,9 @@ export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prismadb),
   session: { strategy: 'jwt' },
   jwt: {
-    secret: process.env.NEXTAUTH_JWT_SECRET,
+    secret: process.env.NEXT_JWT_SECRET,
   },
-  secret: process.env.NEXTAUTHSECRET
+  secret: process.env.NEXT_AUTHSECRET
 };
 
 export default NextAuth(authOptions);
