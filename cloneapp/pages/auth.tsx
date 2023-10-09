@@ -3,14 +3,14 @@ import Input from "components/input";
 import { useCallback, useState } from "react";
 import axios from "axios";
 import {signIn } from 'next-auth/react';
-import { useRouter } from "next/router";
+
 import {FcGoogle} from 'react-icons/fc';
 import {FaGithub} from 'react-icons/fa'
 
 const Auth = () => {
 
   // set and effect setup 
-  const router = useRouter();
+  
   const[email , setEmail] = useState('');
   const[name , setName] = useState('');
   const[password , setPassword] = useState('');
@@ -28,13 +28,13 @@ const Auth = () => {
         email,
         password,
         redirect: false,
-        callbackUrl: '/',
+        callbackUrl: '/profile',
       });
-      router.push('/');
+      
     } catch (error) {
       console.log(error);
     }
-  }, [email, password, router]);
+  }, [email, password]);
 
   // register - used in on click
   const register = useCallback(
@@ -45,7 +45,7 @@ const Auth = () => {
           name,
           password,
         });
-        await login(); // Call the login function after successful registration
+        login(); // Call the login function after successful registration
       } catch (error) {
         console.log(error);
       }
@@ -94,14 +94,14 @@ const Auth = () => {
             <div className="flex flex-row items-center gap-4 mt-8 justify-center">
               {/* Google button */}
             <div
-            onClick={() => signIn('google', { callbackUrl: '/' })} 
+            onClick={() => signIn('google', { callbackUrl: '/profile' })} 
             className="w-10 h-10 bg-white rounded-full flex justify-center items-center cursor-pointer hover:opacity-80 transition mr-2">
               <FcGoogle size={30} />
             </div>
 
             {/* GitHub button */}
             <div
-            onClick={() => signIn('github', { callbackUrl: '/' })} 
+            onClick={() => signIn('github', { callbackUrl: '/profile' })} 
             className="w-10 h-10 bg-white rounded-full flex justify-center items-center cursor-pointer hover:opacity-80 transition">
               <FaGithub size={30} />
             </div>
