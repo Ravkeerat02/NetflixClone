@@ -1,6 +1,8 @@
 import useSwr from 'swr';
 import fetcher from '../libs/fetcher';
 
+
+
 const useBillboard = () => {
   const { data, error, isValidating: isLoading } = useSwr('/api/random', fetcher, {
     revalidateIfStale: false,
@@ -12,7 +14,7 @@ const useBillboard = () => {
     data,
     error,
     isLoading
-  };
+  }
 };
 
 export default useBillboard;
