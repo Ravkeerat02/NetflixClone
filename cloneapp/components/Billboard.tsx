@@ -1,6 +1,6 @@
 import useBillboard from '../hooks/useBillboard';
 import React  from 'react';
-
+import {AiOutlineInfoCircle} from 'react-icons/ai'
 const Billboard = () =>{
 
     // fetchinng data 
@@ -24,7 +24,10 @@ const Billboard = () =>{
                     {data?.description}
                 </p>
                 <div className='flex flex-row items-center mt-3 md:mt-4 gap-3'>
-                    <button className='bg-white text-white bg-opacity-30 rounded-md py-1 md:py-2 px-2 md:px-4 w-auto text-xs lg:text-lg flex flex-row items-center hover:bg-opacity-20 transition '>More info</button>
+                    <button className='bg-white text-white bg-opacity-30 rounded-md py-1 md:py-2 px-2 md:px-4 w-auto text-xs lg:text-lg flex flex-row items-center hover:bg-opacity-20 transition '>
+                        <AiOutlineInfoCircle classname="mr-1" />
+                        More info
+                    </button>
                 </div>
 
             </div>
