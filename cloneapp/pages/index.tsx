@@ -9,6 +9,8 @@ import MovieList from 'components/MovieList';
 // hooks
 import useMovieList from 'hooks/useMovieList';
 import useFavorite from 'hooks/useFavorite';
+import useInfoModalStore from 'hooks/useInfoModalStore';
+import InfoModal from 'components/infoModal';
 
 
 
@@ -32,11 +34,11 @@ export async function getServerSideProps(context: NextPageContext) {
 const Home = () => {
   const { data: movies = [] } = useMovieList();
   const { data: favorites = [] } = useFavorite();
-  // const {isOpen, closeModal} = useInfoModalStore();
+  const {isOpen, closeModal} = useInfoModalStore();
 
   return (
     <>
-      {/* <InfoModal visible={isOpen} onClose={closeModal} /> */}
+      <InfoModal visible={isOpen} onClose={closeModal} />
       <Navbar />
       <Billboard />
       <div className="pb-40">
