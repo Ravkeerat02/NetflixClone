@@ -1,41 +1,49 @@
-import Navbar from 'components/Navbar';
+// packages
+import React from 'react';
 import { NextPageContext } from 'next';
-import { signOut, getSession } from 'next-auth/react';
-// component
+import { getSession } from 'next-auth/react';
+// components
+import Navbar from 'components/Navbar';
 import Billboard from 'components/Billboard';
 import MovieList from 'components/MovieList';
-// hooks
-import useCurrentUser from 'hooks/useCurrentUser';
 import useMovieList from 'hooks/useMovieList';
+import useFavorite from 'hooks/useFavorite';
+
+
 
 export async function getServerSideProps(context: NextPageContext) {
-  // fetching session from client
   const session = await getSession(context);
+
   if (!session) {
     return {
       redirect: {
         destination: '/auth',
         permanent: false,
-      },
-    };
+      }
+    }
   }
+
   return {
-    props: {},
-  };
+    props: {}
+  }
 }
 
+const Home = () => {
+  const { data: movies = [] } = useMovieList();
+  const { data: favorites = [] } = useFavorite();
+  // const {isOpen, closeModal} = useInfoModalStore();
 
-export default function Home() {
-  // Uused to fetch movies 
-  const {data :movies = []} = useMovieList()
   return (
     <>
+      {/* <InfoModal visible={isOpen} onClose={closeModal} /> */}
       <Navbar />
       <Billboard />
-      <div className ="pb-40">
-        <MovieList title="Trending now" data={movies} />
-        
+      <div className="pb-40">
+        <MovieList title="Trending Now" data={movies} />
+        <MovieList title="My List" data={favorites} />
       </div>
     </>
-  );
+  )
 }
+
+export default Home;
