@@ -1,20 +1,23 @@
-import { NextApiRequest , NextApiResponse } from "next";
-import prismadb from "../../../libs/prismadb" 
+import { NextApiRequest, NextApiResponse } from "next";
+import prismadb from "../../../libs/prismadb";
 import serverAuth from "../../../libs/serverAuth";
 
-export default async function handler(req:NextApiRequest , res:NextApiResponse){
-    if(req.method !== "GET"){
-        return res.status(405).end()
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    if (req.method !== "GET") {
+      return res.status(405).end(); // Method Not Allowed
     }
-    try{
-        await serverAuth(req,res)
-        // load all the movies
-        const movies = await prismadb.movie.findMany()
-        // return res.status(200).json(movies)
-        console.log(movies)
-        
-    }catch(error){
-        console.log(error)
-        return res.status(400).end()
-    }
+
+    // Authenticate the request
+    await serverAuth(req, res);
+
+    // Retrieve movies from the database
+    const movies = await prismadb.movie.findMany();
+
+    // Return the movies as JSON response
+    return res.status(200).json(movies);
+  } catch (error) {
+    console.error("Error:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
 }
