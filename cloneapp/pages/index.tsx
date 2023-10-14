@@ -6,11 +6,11 @@ import { getSession } from 'next-auth/react';
 import Navbar from 'components/Navbar';
 import Billboard from 'components/Billboard';
 import MovieList from 'components/MovieList';
+import InfoModal from 'components/InfoModal';
 // hooks
 import useMovieList from 'hooks/useMovieList';
 import useFavorite from 'hooks/useFavorite';
 import useInfoModalStore from 'hooks/useInfoModalStore';
-import InfoModal from 'components/infoModal';
 
 
 

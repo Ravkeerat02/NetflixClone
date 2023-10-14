@@ -1,25 +1,36 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
-import PlayButton from '../components/PlayButton';
-import FavoriteButton from '../components/FavoriteButton';
+import PlayButton from './PlayButton';
+import FavoriteButton from './FavoriteButton';
+
 import useInfoModalStore from '../hooks/useInfoModalStore';
 import useMovie from '../hooks/useMovie';
+import { MovieInterface } from 'types';
 
 interface InfoModalProps {
   visible?: boolean;
   onClose: any;
+  
 }
 
 const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
   const [isVisible, setIsVisible] = useState<boolean>(!!visible);
-
   const { movieId } = useInfoModalStore();
-  const { data = {} } = useMovie(movieId);
+  const { data, isLoading, isError } = useMovie(movieId);
 
   useEffect(() => {
     setIsVisible(!!visible);
   }, [visible]);
+
+  useEffect(() => {
+    if (isError) {
+      console.error('Error loading movie data:', isError);
+    }
+    console.log('Movie Data:', data);
+    console.log('Is Loading:', isLoading);
+    console.log('Has Error:', isError);
+  }, [data, isLoading, isError]);
 
   const handleClose = useCallback(() => {
     setIsVisible(false);
@@ -30,6 +41,14 @@ const InfoModal: React.FC<InfoModalProps> = ({ visible, onClose }) => {
 
   if (!visible) {
     return null;
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (isError) {
+    return <div>Error loading movie data.</div>;
   }
 
   return (
